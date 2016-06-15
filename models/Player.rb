@@ -8,6 +8,7 @@ class Player
 		@losses = 0
 		@draws = 0
 		@@player_profiles << self
+		@moves = []
 	end
 	
 	def self.all
@@ -29,6 +30,10 @@ class Player
 	
 	def draw
 		@draws +=1
+	end
+
+	def moves
+		@moves
 	end
 
 end
