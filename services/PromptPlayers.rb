@@ -1,21 +1,21 @@
 class PromptPlayers
-	attr_accessor :name, :icon, :cpu
+	attr_accessor :name, :player_icon, :cpu, :cpu_icon, :player
 	def self.prompt
 		set_name
 		set_icon
-		@player = Player.new(@name_input,@icon_input)
+		@player = Player.new(@name,@player_icon)
 		@cpu = Player.new("CPU", @cpu_icon)
 
 	end
 	def self.set_icon
 		puts "Select an icon (X/O)"
-		@icon_input = gets.strip
-		unless @icon_input == "X".downcase || @icon_input == "O".downcase then set_icon
-		@icon_input == "X".downcase ? @cpu_icon = "O".downcase : @cpu_icon = "X".downcase
+		@player_icon = gets.strip
+		unless @player_icon == "X".downcase || @player_icon == "O".downcase then set_icon
+		@player_icon == "X".downcase ? @cpu_icon = "O".downcase : @cpu_icon = "X".downcase
 
 	end
 	def self.set_name
 		puts "Enter name"
-		@name_input = gets.strip
+		@name = gets.strip
 	end
 end
