@@ -25,7 +25,7 @@ class Turn
       @location = input.to_i-1
       if valid_move?(@board, @location)
         move(@board, @location, @player_icon)
-        @player_moves << @location      
+        @moves << @location      
       else
         puts "Please enter valid move"
         player_turn(@board)
@@ -37,7 +37,7 @@ class Turn
   		@location = input.to_i
   		if valid_move?(@board, @location)
         move(@board, @location, @cpu_icon)
-        @cpu_moves << @location
+        @moves << @location
       else
         cpu_turn(@board)
       end
