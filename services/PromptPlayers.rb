@@ -10,8 +10,16 @@ class PromptPlayers
 	def self.set_icon
 		puts "Select an icon (X/O)"
 		@player_icon = gets.strip
-		unless @player_icon == "X".downcase || @player_icon == "O".downcase then set_icon
-		@player_icon == "X".downcase ? @cpu_icon = "O".downcase : @cpu_icon = "X".downcase
+		if @player_icon == "X".downcase
+			@player_icon = "X".downcase
+			@cpu_icon = "O".downcase
+		elsif @player_icon == "O".downcase
+			@player_icon = "O".downcase
+			@cpu_icon = "X".downcase
+		else
+			puts "Invalid choice, please choose again"
+			self.set_icon
+		end
 
 	end
 	def self.set_name
