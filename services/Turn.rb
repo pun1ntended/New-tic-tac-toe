@@ -2,11 +2,15 @@ require 'pry'
 class Turn
 	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
     
-    def run(competitors, board)
+    def run(player, cpu, board)
+      binding.pry
       @board = board
+      @player = player
+      @cpu = cpu
       current_turn(@board)
       @cpu = competitors.cpu
       @player = competitors.player
+
     end
 
     def move(board, location, icon)
@@ -28,7 +32,7 @@ class Turn
     end
 
     def player_turn(player, board)
-      player = competitors.player
+      player = @player
       board = @board
       puts "Please enter 1-9:"
       input = gets.strip
@@ -43,7 +47,7 @@ class Turn
   	end
   	
   	def cpu_turn(player, board)
-      player = comptetitors.cpu
+      player = @cpu
       @board = board
   		input = rand(0..8)
   		@location = input

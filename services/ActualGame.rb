@@ -5,6 +5,16 @@ require_relative 'PromptPlayers.rb'
 require_relative 'Winning.rb'
 require_relative 'Turn.rb'
 require 'pry'
-competitors = PromptPlayers.new.run
-board = Board.new
-Turn.new.run(competitors, board)
+class ActualGame
+	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
+	def run
+		prompt = PromptPlayers.new
+		prompt.run
+		cpu = prompt.cpu
+		player = prompt.player
+		board = Board.new
+		Turn.new.run(player, cpu, board)
+	end
+end
+
+ActualGame.new.run
