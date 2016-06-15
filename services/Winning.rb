@@ -13,24 +13,41 @@ class Winning
       [2,4,6]
     ]
     # => Move this to winning class
-  def win_condition
-    WIN_COMBINATIONS.each do |winning_combo|
-      if win_method?
-      else
-        turn_count(@board)
-        current_turn(@board) 
+  # def win_condition
+  #   WIN_COMBINATIONS.select do |winning_combo|
+  #     if winning_combo.all? do {|win_position| @player_moves.include?(win_position)} == true
+  #       @current_player.win
+  #       puts "humans > machines lol"
+  #       puts @current_player.stats
+  #       break
+  #     else
+  #       turn_count(@board)
+  #       current_turn(@board) 
+  #     end
+  #   end
+  # end
+
+  def win_conditon(player)
+    @current_player = player
+    WIN_COMBINATIONS.select do |winning_combo|
+      winning_combo.all? do |winning_position| 
+        player.moves.include?(winning_position)
       end
+    end 
+  end
+
+  def check_victory(player)
+    @current_player = player
+    if win_conditon(player) != []
+      @current_player.win
+      puts "humans > machines lol"
+      break
+    else
+      turn.turn_count(@board)
+      turn.current_turn(@board)
     end
   end
 
-  def win_method?
-    if winning_combo.all?{ |win_position| @player_moves.include?(win_position)} == true
-      @current_player.win
-      puts "humans > machines lol"
-      puts @current_player.stats
-      break
-    end
-  end
 
   def full?(board)
     board = @board
