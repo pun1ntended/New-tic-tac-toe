@@ -1,6 +1,6 @@
 class Winning
 
-  attr_accessor :positions, :cpu_icon, :play_icon, :board
+  attr_accessor :positions, :cpu_icon, :play_icon, :board, :player, :cpu, :winner
 
   WIN_COMBINATIONS = [
       [0,1,2],
@@ -14,7 +14,7 @@ class Winning
     ]
 
   def win_conditon(player)
-    @current_player = player
+    player = @player
     WIN_COMBINATIONS.select do |winning_combo|
       winning_combo.all? do |winning_position| 
         player.moves.include?(winning_position)
@@ -23,13 +23,9 @@ class Winning
   end
 
   def check_victory(player)
-    @current_player = player
+    player = @player
     if win_conditon(player) != []
-      @current_player.win
       puts "humans > machines lol"
-    else
-      turn.turn_count(@board)
-      turn.current_turn(@board)
     end
   end
 
@@ -42,20 +38,20 @@ class Winning
 
   def draw?(board)
     board = @board
-    !win_method?(board) && full?(board)
+    !check_victory(@board) && full?(@board)
   end
 
   def over?(board)
     board = @board
     win_method?(board) || draw?(board)
   end
-  
-  def winner(board)
-    board = @board
-    winner = won?(board)
-    if winner
-      return board[winner[0]]
-    end
-  end
+
+  # def winner(board)
+  #   board = @board
+  #   winner = won?(@board)
+  #   if winner
+  #     return board[winner[0]]
+  #   end
+  # end
 
 end # <= closes class
