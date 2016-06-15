@@ -1,12 +1,13 @@
 require 'pry'
 class Turn
-	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
+	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon, :display_board
     
-    def run(competitors, board)
+    def run(player, cpu, board)
       @board = board
-      current_turn(@board)
-      @cpu = competitors.cpu
-      @player = competitors.player
+      @player = player
+      @cpu = cpu
+      player_turn(@player, @board)
+
     end
 
     def move(board, location, icon)
@@ -28,14 +29,18 @@ class Turn
     end
 
     def player_turn(player, board)
-      player = competitors.player
+      player = @player
       board = @board
       puts "Please enter 1-9:"
       input = gets.strip
       @location = input.to_i-1
       if valid_move?(@board, @location)
-        move(@board, @location, @player_icon)
-        @player.moves << @location      
+        move(@board, @location, @player.icon)
+        @player.moves << @location
+        @board.display_board
+       
+        cpu_turn(@cpu, @board)
+      
       else
         puts "Please enter valid move"
         player_turn(@player, @board)
@@ -43,37 +48,42 @@ class Turn
   	end
   	
   	def cpu_turn(player, board)
-      player = comptetitors.cpu
+      player = @cpu
       @board = board
   		input = rand(0..8)
   		@location = input
   		if valid_move?(@board, @location)
-        move(@board, @location, @cpu_icon)
+        move(@board, @location, @cpu.icon)
         @cpu.moves << @location
+        @board.display_board
+        player_turn(@player, @board)
+       
+
+      
       else
         cpu_turn(@cpu, @board)
       end
     end
     
-    def turn_count(board)
-  		counter = 0
-  		@board = board
-  		@board.positions.each do |space|
-	    	if space != " "
-	      	counter += 1
-	    	end 
-	    end
-      counter
-  	end
+   #  def turn_count(board)
+  	# 	counter = 0
+  	# 	@board = board
+  	# 	@board.positions.each do |space|
+	  #   	if space != " "
+	  #     	counter += 1
+	  #   	end 
+	  #   end
+   #    counter
+  	# end
 
-	def current_turn(board)
-      @board = board
-      turn_count(@board)
-	  	if turn_count(@board) % 2 == 0
-	    	player_turn(@player, @board)
-	  	else
-	  		cpu_turn(@board)
-	  	end
-	end
+	# def current_turn(board)
+ #      @board = board
+ #      turn_count(@board)
+	#   	if turn_count(@board) % 2 == 0
+	#     	player_turn(@player, @board)
+	#   	else
+	#   		cpu_turn(@board)
+	#   	end
+	# end
 
 end
