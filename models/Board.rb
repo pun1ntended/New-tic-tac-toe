@@ -1,6 +1,6 @@
 class Board
   # => @board = Array.new(9, " ")
-  attr_reader :positions, :name, :cpu, :icon
+  attr_reader :positions, :name, :cpu, :player_icon, :cpu_icon
   
   def initialize
     numbered_board
@@ -9,7 +9,7 @@ class Board
     @current_board = @board
   end
   def positions
-  	@positions
+  	@current_board
   end
 
   def numbered_board
