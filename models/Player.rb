@@ -1,14 +1,15 @@
 class Player
 	@@player_profiles = []
-	attr_accessor :name, :player_icon
+	attr_accessor :name, :player_icon, :cpu, :cpu_icon, :moves
 	def initialize(name, icon)
 		@name = name
-		@player_icon = icon
+		@icon = icon
 		@wins = 0
 		@losses = 0
 		@draws = 0
-		@@player_profiles << self
 		@moves = []
+		@@player_profiles << self
+		
 	end
 	
 	def self.all
@@ -19,21 +20,17 @@ class Player
 		@stats = [:W => @wins,:L => @losses,:D => @draws]
 		puts stats
 	end
-	
-	def win
-		@wins += 1
-	end
-	
-	def lose
-		@losses +=1
-	end
-	
-	def draw
-		@draws +=1
-	end
 
 	def moves
 		@moves
+	end
+
+	def icon
+		@icon
+	end
+
+	def name
+		@name
 	end
 
 end
