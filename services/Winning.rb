@@ -16,6 +16,10 @@ class Winning
   def win_condition
     WIN_COMBINATIONS.each do |winning_combo|
       if win_method?
+        @current_player.win
+        puts "humans > machines lol"
+        puts @current_player.stats
+        break
       else
         turn_count(@board)
         current_turn(@board) 
@@ -24,11 +28,8 @@ class Winning
   end
 
   def win_method?
-    if winning_combo.all?{ |win_position| @player_moves.include?(win_position)} == true
-      @current_player.win
-      puts "humans > machines lol"
-      puts @current_player.stats
-      break
+    winning_combo.all? do |win_position| 
+      @player_moves.include?(win_position) == true
     end
   end
 
