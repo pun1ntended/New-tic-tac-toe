@@ -7,4 +7,4 @@ require_relative 'Turn.rb'
 require 'pry'
 competitors = PromptPlayers.new.run
 board = Board.new
-Turn.new.run(board)
+Turn.new.run(competitors, board)

@@ -1,10 +1,12 @@
 require 'pry'
 class Turn
-	attr_accessor :name, :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
+	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
     
-    def run(board)
+    def run(competitors, board)
       @board = board
       current_turn(@board)
+      @cpu = competitors.cpu
+      @player = competitors.player
     end
 
     def move(board, location, icon)
@@ -33,7 +35,7 @@ class Turn
       @location = input.to_i-1
       if valid_move?(@board, @location)
         move(@board, @location, @player_icon)
-        player.moves << @location      
+        @player.moves << @location      
       else
         puts "Please enter valid move"
         player_turn(@player, @board)
@@ -47,7 +49,7 @@ class Turn
   		@location = input
   		if valid_move?(@board, @location)
         move(@board, @location, @cpu_icon)
-        player.moves << @location
+        @cpu.moves << @location
       else
         cpu_turn(@cpu, @board)
       end
