@@ -4,8 +4,7 @@ require_relative 'GameFlow.rb'
 require_relative 'PromptPlayers.rb'
 require_relative 'Winning.rb'
 require_relative 'Turn.rb'
-
-PromptPlayers.prompt
-@board = Board.new
-turn = Turn.new
-turn.current_turn(@board)
+require 'pry'
+competitors = PromptPlayers.new.run
+board = Board.new
+Turn.new.run(board)

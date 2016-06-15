@@ -1,10 +1,16 @@
+require 'pry'
 class Turn
-	attr_accessor :name, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
+	attr_accessor :name, :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon
     
+    def run(board)
+      @board = board
+      current_turn(@board)
+    end
+
     def move(board, location, icon)
     	@board = board
     	@location = location
-     	@board.positions[@location] = @icon   
+     	@board.positions[@location] = icon   
     end
 
     def position_taken?(board, location)
@@ -20,29 +26,30 @@ class Turn
     end
 
     def player_turn(player, board)
-      @name = player
-      @board = board
+      player = competitors.player
+      board = @board
       puts "Please enter 1-9:"
       input = gets.strip
       @location = input.to_i-1
       if valid_move?(@board, @location)
         move(@board, @location, @player_icon)
-        @name.moves << @location      
+        player.moves << @location      
       else
         puts "Please enter valid move"
-        player_turn(@board)
+        player_turn(@player, @board)
       end
   	end
   	
-  	def cpu_turn(board)
+  	def cpu_turn(player, board)
+      player = comptetitors.cpu
       @board = board
   		input = rand(0..8)
   		@location = input
   		if valid_move?(@board, @location)
         move(@board, @location, @cpu_icon)
-        @cpu_moves << @location
+        player.moves << @location
       else
-        cpu_turn(@board)
+        cpu_turn(@cpu, @board)
       end
     end
     
@@ -54,14 +61,14 @@ class Turn
 	      	counter += 1
 	    	end 
 	    end
-	    counter
+      counter
   	end
 
 	def current_turn(board)
       @board = board
       turn_count(@board)
 	  	if turn_count(@board) % 2 == 0
-	    	player_turn(@name, @board)
+	    	player_turn(@player, @board)
 	  	else
 	  		cpu_turn(@board)
 	  	end
