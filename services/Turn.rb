@@ -1,6 +1,6 @@
 require 'pry'
 class Turn
-	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :icon, :display_board
+	attr_accessor :player, :cpu, :board, :player_icon, :cpu_icon, :location, :moves, :winning
     
     def run(player, cpu, board)
       @board = board
@@ -38,6 +38,7 @@ class Turn
         move(@board, @location, @player.icon)
         @player.moves << @location
         @board.display_board
+
        
         cpu_turn(@cpu, @board)
       
